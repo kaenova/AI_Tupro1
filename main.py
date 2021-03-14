@@ -4,8 +4,8 @@ import math
 def initialize_population(population):
     for i in range(10): #ada 10 kromosom
         kromosom = []
-        for j in range(6): #ada 6 genotipe
-            kromosom.append(round((random.uniform(0, 1)), 3))
+        for j in range(6): #ada 6 genotipe 
+            kromosom.append(round((random.uniform(0, 1)), 3)) 
         population.append(kromosom)
     return population
 
@@ -13,14 +13,14 @@ def decodeX(genotipeX = []):
     temp_sum = 0
     for i in range(3):
         temp_sum = temp_sum + genotipeX[i]
-    temp_x = (-1 + (2-(-1)) * temp_sum)
+    temp_x = (-1 + ((2-(-1)) * (temp_sum/3)))
     return temp_x
 
 def decodeY(genotipeY = []):
     temp_sum = 0
     for i in range(3):
         temp_sum = temp_sum + genotipeY[i]
-    temp_y = (-1 + (1 -(-1)) * temp_sum)
+    temp_y = (-1 + ((1 -(-1)) * (temp_sum/3)))
     return temp_y
     
 def fitnessDecode(population, fitness = []):
@@ -54,6 +54,8 @@ if __name__ == "__main__":
     fitness = []
     initialize_population(pop)
     fitnessDecode(pop, fitness)
+    print(pop)
+    print
 
 
 
