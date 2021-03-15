@@ -13,5 +13,3 @@ class krom:
     
 
 parent = krom()
-
-print(krom.)

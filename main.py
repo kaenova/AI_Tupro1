@@ -27,7 +27,6 @@ def fitnessDecode(population, fitness = []):
     # rumus fitness maksimasi f = h
     for i in range(10): #ada 10 kromosom
         kromosom = population[i]
-        print(kromosom)
         genotipeX = []
         genotipeY = []
         
@@ -43,19 +42,86 @@ def fitnessDecode(population, fitness = []):
         y = decodeY(genotipeY)
 
         fitness_temp = (math.cos(x**2) * math.sin(y**2)) + (x + y)
-        
-        print("Fenotipe Kromosom{} X:{} Y:{} dengan fitness {}".format(i+1,x,y,fitness_temp))
 
         fitness.append(fitness_temp)
 
+    # making all the fitness not negative, but this gave me a weird understanding of a fitness.
+    # minimum_fitness = min(fitness)
+    # for i in range(10):
+    #     fitness[i] = fitness[i] +  (-minimum_fitness)
+
+def tournamentSelection(population):
+    #get best of 6 parent
+    parent = []
+    for i in range(6):
+        parent.append(population[i])
+
+    return parent
+
+def getElitism(population):
+    #get best of 4 kromosome
+    elitism = []
+    for i in range(4):
+        elitism.append(population[i])
+
+    return elitism
+
+
+def PopFitnessSort(population, fitness):
+    #Using selection sort
+    i = 0
+    j = 0
+    while i < 10:
+        maksimum = i
+        j = i + 1
+        while j < 9:
+            if fitness[j] > fitness[maksimum]:
+                maksimum = j
+            j = j + 1
+
+        temp_fitness = fitness[maksimum]
+        temp_kromosom = population[maksimum]
+        fitness[maksimum] = fitness[i]
+        population[maksimum] = population[i]
+        fitness[i] = temp_fitness
+        population[i] = temp_kromosom
+        i = i+1
+
+
+def printBestKromosom(population, fitness, generation):
+    best_kromosome = population[0]
+    best_fitness = fitness[0]
+    temp_Xgenotipe = []
+    temp_Ygenotpe = []
+    for i in range(6):
+        if i < 3:
+            temp_Xgenotipe.append(best_kromosome[i])
+        else:
+            temp_Ygenotpe.append(best_kromosome[i])
+    print("Best of Generation {}".format(generation))
+    print("Fitness: {}".format(best_fitness))
+    print("Fenotipe X:{} Y:{}".format(decodeX(temp_Xgenotipe), decodeY(temp_Ygenotpe)))
+    print("Genotipe: {}".format(best_kromosome))
+
+def crossover(parent):
+    
+
+
 
 if __name__ == "__main__":
+    generation = int(input("Masukkan ingin berapa generasi?: "))
     pop = []
     fitness = []
     initialize_population(pop)
-    fitnessDecode(pop, fitness)
-    print(pop)
-    print
+    for i in range(generation):
+        fitnessDecode(pop, fitness)
+        PopFitnessSort(pop, fitness)
+        printBestKromosom(pop, fitness, generation)
+        parent = tournamentSelection(pop)
+        elitism = getElitism(pop)
+        print(elitism)
+        print(parent)
+        
 
 
 
