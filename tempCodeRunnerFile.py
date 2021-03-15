@@ -1,0 +1,1 @@
+printAllKromosome(population)
