@@ -1,13 +1,33 @@
 import random
 import math
 
+class kromosome():
+    panjang = 6
+    def __init__(self):
+        self.kromosom = []
+        self.fitness = 0
+        self.x = 0
+        self.y = 0
+        for j in range(6):
+            self.kromosom.append(round((random.uniform(0,1)), 3))
+
+    def decodeX(self):
+        temp_sum = 0
+        for i in range(3):
+            temp_sum = temp_sum + self.kromosom[i]
+        self.x = (-1 + ((2-(-1)) * (temp_sum/3)))
+
+    def decodeY(self):
+        temp_sum = 0
+        for i in range(3):
+            temp_sum = temp_sum + self.kromosom[i]
+        self.x = (-1 + ((2-(-1)) * (temp_sum/3)))
+
 def initialize_population():
     population = []
     for i in range(10): #ada 10 kromosom
-        kromosom = []
-        for j in range(6): #ada 6 genotipe 
-            kromosom.append(round((random.uniform(0, 1)), 3)) 
-        population.append(kromosom)
+        kromosome_temp = kromosome()
+        population.append(kromosome_temp)
     return population
 
 def decodeX(genotipeX = []):
@@ -177,27 +197,30 @@ def next_gen(elitism, children):
 
 
 if __name__ == "__main__":
-    generation = int(input("Masukkan ingin berapa generasi?: "))
-    pop = []
-    fitness = []
-    fitness_terbaik = 0
-    generasi_terbaik = 0
-    pop = initialize_population()
-    for i in range(generation):
-        fitness = fitnessDecode(pop)
-        pop, fitness = PopFitnessSort(pop, fitness)
-        printBestKromosom(pop, fitness, i)
-        parent = tournamentSelection(pop)
+    population = initialize_population()
 
-        elitism = getElitism(pop)
-        mating_pool = MatingPool(parent)
-        children = crossover(mating_pool)
-        children = mutation(children)
 
-        pop = next_gen(elitism, children)
-        if fitness_terbaik <= fitness[0]:
-            fitness_terbaik = fitness[0]
-            generasi_terbaik = i + 1
+    # generation = int(input("Masukkan ingin berapa generasi?: "))
+    # pop = []
+    # fitness = []
+    # fitness_terbaik = 0
+    # generasi_terbaik = 0
+    # pop = initialize_population()
+    # for i in range(generation):
+    #     fitness = fitnessDecode(pop)
+    #     pop, fitness = PopFitnessSort(pop, fitness)
+    #     printBestKromosom(pop, fitness, i)
+    #     parent = tournamentSelection(pop)
 
-    print("Generasi Terbaik: {}".format(generasi_terbaik))
-    print("Dengan Fitness: {}".format(fitness_terbaik))
+    #     elitism = getElitism(pop)
+    #     mating_pool = MatingPool(parent)
+    #     children = crossover(mating_pool)
+    #     children = mutation(children)
+
+    #     pop = next_gen(elitism, children)
+    #     if fitness_terbaik <= fitness[0]:
+    #         fitness_terbaik = fitness[0]
+    #         generasi_terbaik = i + 1
+
+    # print("Generasi Terbaik: {}".format(generasi_terbaik))
+    # print("Dengan Fitness: {}".format(fitness_terbaik))
