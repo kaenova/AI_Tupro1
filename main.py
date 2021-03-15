@@ -1,7 +1,8 @@
 import random
 import math
 
-def initialize_population(population):
+def initialize_population():
+    population = []
     for i in range(10): #ada 10 kromosom
         kromosom = []
         for j in range(6): #ada 6 genotipe 
@@ -23,8 +24,9 @@ def decodeY(genotipeY = []):
     temp_y = (-1 + ((1 -(-1)) * (temp_sum/3)))
     return temp_y
     
-def fitnessDecode(population, fitness = []):
+def fitnessDecode(population):
     # rumus fitness maksimasi f = h
+    fitness = []
     for i in range(10): #ada 10 kromosom
         kromosom = population[i]
         genotipeX = []
@@ -44,6 +46,8 @@ def fitnessDecode(population, fitness = []):
         fitness_temp = (math.cos(x**2) * math.sin(y**2)) + (x + y)
 
         fitness.append(fitness_temp)
+    
+    return fitness
 
     # making all the fitness not negative, but this gave me a weird understanding of a fitness.
     # minimum_fitness = min(fitness)
@@ -86,6 +90,7 @@ def PopFitnessSort(population, fitness):
         fitness[i] = temp_fitness
         population[i] = temp_kromosom
         i = i+1
+    return population, fitness
 
 
 def printBestKromosom(population, fitness, generation):
@@ -98,13 +103,76 @@ def printBestKromosom(population, fitness, generation):
             temp_Xgenotipe.append(best_kromosome[i])
         else:
             temp_Ygenotpe.append(best_kromosome[i])
-    print("Best of Generation {}".format(generation))
+    print("Best of Generation {}".format(generation + 1))
     print("Fitness: {}".format(best_fitness))
     print("Fenotipe X:{} Y:{}".format(decodeX(temp_Xgenotipe), decodeY(temp_Ygenotpe)))
-    print("Genotipe: {}".format(best_kromosome))
+    print("Genotipe: {} \n".format(best_kromosome))
 
-def crossover(parent):
+def MatingPool(parent):
+    #buat mating pool
+    parent_temp = parent
+    j = len(parent_temp)
+    pasangan_temp = []
+    pasangan = []
+
+    for i in range(2):
+        random_angka_parent = random.randint(1, j-2)
+        pasangan_temp.append(parent_temp[0])
+        pasangan_temp.append(parent_temp[random_angka_parent])
+        pasangan.append(pasangan_temp)
+        pasangan_temp = []
+        parent_temp.pop(random_angka_parent)
+        parent_temp.pop(0)
+        j = j-1
+
+    pasangan.append(parent_temp)
+
+    return pasangan
+
+def crossover(pasangan):
+    children = []
+    for i in range(3):
+        temp_pasangan = pasangan[i]
+        parent1 = temp_pasangan[0]
+        parent2 = temp_pasangan[1]
+        panjang_potong = random.randint(1,4)
+
+        children_temp1 = []
+        children_temp2 = []
+
+        for j in range(panjang_potong):
+            children_temp1.append(parent1[j])
+        for k in range(len(parent1) - panjang_potong):
+            children_temp1.append(parent2[k+panjang_potong])
+        for j in range(panjang_potong):
+            children_temp2.append(parent2[j])
+        for k in range(len(parent1) - panjang_potong):
+            children_temp2.append(parent1[k+panjang_potong])
+
+        children.append(children_temp1)
+        children.append(children_temp2)
+
+    return children
+
+def mutation(children):
+    mutated_children = []
+    for i in range(6):
+        temp_children = children[i]
+        for j in range(6):
+            random_mutation = random.uniform(0,1)
+            if (random_mutation < 0.1 ): #Setup mutasi
+                temp_children[j] += (random.uniform(-0.05,0.05))
+        mutated_children.append(temp_children)
     
+    return mutated_children
+
+def next_gen(elitism, children):
+    population = []
+    for i in range(4):
+        population.append(elitism[i])
+    for j in range(6):
+        population.append(children[j])
+    return population
 
 
 
@@ -112,61 +180,24 @@ if __name__ == "__main__":
     generation = int(input("Masukkan ingin berapa generasi?: "))
     pop = []
     fitness = []
-    initialize_population(pop)
+    fitness_terbaik = 0
+    generasi_terbaik = 0
+    pop = initialize_population()
     for i in range(generation):
-        fitnessDecode(pop, fitness)
-        PopFitnessSort(pop, fitness)
-        printBestKromosom(pop, fitness, generation)
+        fitness = fitnessDecode(pop)
+        pop, fitness = PopFitnessSort(pop, fitness)
+        printBestKromosom(pop, fitness, i)
         parent = tournamentSelection(pop)
+
         elitism = getElitism(pop)
-        print(elitism)
-        print(parent)
-        
+        mating_pool = MatingPool(parent)
+        children = crossover(mating_pool)
+        children = mutation(children)
 
+        pop = next_gen(elitism, children)
+        if fitness_terbaik <= fitness[0]:
+            fitness_terbaik = fitness[0]
+            generasi_terbaik = i + 1
 
-
-
-
-# def dekode():
-
-
-# def fitness():
-
-
-# def selection():
-
-
-# def mutation():
-
-
-# def crossover():
-#     #di dalm sini harusnya ada pemotongan
-
-# def regeneration():
-
-
-
-# def pemotongan(ortu1, ortu2, panjang_gen, panjang_potong):
-#     anak1 = []
-#     anak2 = []
-
-#     for j in range(panjang_potong):
-#         anak1.append(ortu1[j])
-#     for k in range(panjang_gen - panjang_potong):
-#         anak1.append(ortu2[k+panjang_potong])
-#     for j in range(panjang_potong):
-#         anak2.append(ortu2[j])
-#     for k in range(panjang_gen - panjang_potong):
-#         anak2.append(ortu1[k+panjang_potong])
-
-#     return anak1, anak2
-
-# a = kromosom()
-
-# bruh1 = [0,1,1,1,0]
-# bruh2 = [1,0,0,1,1]
-# panjang_potong = random.randint(1,5)
-# offspring1, offspring2 = pemotongan(bruh1, bruh2, 5, panjang_potong)
-# print("panjang potong: {}".format(panjang_potong))
-# print("awal: {}{}".format(bruh1, bruh2))
-# print("akhir: {}{}".format(offspring1, offspring2))
+    print("Generasi Terbaik: {}".format(generasi_terbaik))
+    print("Dengan Fitness: {}".format(fitness_terbaik))
