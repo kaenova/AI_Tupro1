@@ -1,5 +1,7 @@
 import random
 import math
+from time import sleep
+from tqdm import tqdm
 
 class kromosome():
     panjang = 6
@@ -144,23 +146,15 @@ def mutation(children):
     
     return children
 
-def next_gen(elitism, children):
-    population = []
-    for i in range(4):
-        population.append(elitism[i])
-    for j in range(6):
-        population.append(children[j])
-    return population
-
 def printAllKromosome(population = [kromosome()]):
     for i in range(len(population)):
         population[i].PrintKromosome()
 
 def printBestKromosom(best: kromosome, generasi):
-    print("Best of Generation {}".format(generasi+1))
+    print(" Best Fitness from Generation {}".format(generasi+1))
     print("Fitness: {}".format(best.fitness))
     print("Fenotip X: {} Y: {}".format(best.x, best.y))
-    print("Genotipe: {}".format(best.kromosom))
+    print("Genotipe: {} \n".format(best.kromosom))
 
 
 
@@ -176,10 +170,14 @@ if __name__ == "__main__":
 
     population = initialize_population(population_number)
 
-    for i in range(generation):
+    best_kromosom = kromosome()
+
+    for i in tqdm(range(generation)):
         calculateKromosomeFitness(population)
         PopulationFitnessSort(population)
-        printBestKromosom(population[0], i)
+        if best_kromosom.fitness < population[0].fitness:
+            best_kromosom = population[0]
+            printBestKromosom(population[0], i)
         parent = tournamentSelection(population)
         elitism = getElitism(population)
         couple = MatingPool(parent)
