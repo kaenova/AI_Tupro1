@@ -12,9 +12,9 @@ Informatics Engineering, Telkom University, Indonesia<br>
 This project is the first of three project from course Artificial Intelligence Introduction. This project implement searching technique in Artificial Intelligence with Genetic Algorithm. With this algorithm we made the population and the generation are free variable. Other things are we implement Elitism. In selection to get a parent, we using fitness competition to get a parent as much (Population - Elitism Population) so that the next generation will be formed by Elitism Population and a child from Crossover.
 
 This algorithm need ```tqdm``` library. To install it use this command:
-    pip install tqdm
+    ```pip install tqdm```
 or  
-    conda install tqdm
+    ```conda install tqdm```
 
 
 
@@ -23,12 +23,8 @@ or
 Proyek ini merupakan proyek pertama dari Mata Kuliah Pengantar Kecerdasan Buatan dari 3 proyek yang akan di buat. Proyek pertama ini mengimplementasikan teknik searching dalam Kecerdasan Buatan dengan Genetic Algorithm. Pada algoritma ini kami membuat populasi dan generasi yang dapat diatur. Hal lain juga kami mengimplementasikan Elitisme. Pada penyeleksian orang tua, kami menggunakan fitness kompetisi dimana akan diambil sebanyak (Jumlah Populasi - Jumlah Elitism) sehingga generasi yang terbaru akan dibuat dari Elitisme serta hasil Crossover.  
   
 Pada algoritma ini dibutuhkan library ```tqdm```. Untuk menginstallnya gunakan command berikut:  
-    pip install tqdm
+    ```pip install tqdm```
 atau
-    conda install tqdm
-
-
-## [Assignment Documentation in Bahasa Indonesia]
-<iframe src="https://drive.google.com/file/d/150bB7ymwfn6TGePZKaz3JHbyYg3MALHS/preview" width="640" height="480"></iframe>
+    ```conda install tqdm```
 
 <img  align= "right" src="https://cdn.discordapp.com/attachments/527433841690804224/791558706508726292/Pre-comp-3.gif"  width="200">
