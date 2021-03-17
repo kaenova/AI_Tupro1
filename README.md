@@ -6,7 +6,7 @@ Elita Aurora Az Zahra<sup>3</sup><br>
 <sup>2</sup><a href="adheakramazhari@student.telkomuniversity.ac.id">adheakramazhari@student.telkomuniversity.ac.id</a><br>
 <sup>3</sup><a href="elitaaurora@student.telkomuniversity.ac.id">elitaaurora@student.telkomuniversity.ac.id</a><br>
 Informatics Engineering, Telkom University, Indonesia<br>
-2020
+2021
 
 ## [English]
 This project is the first of three project from course Artificial Intelligence Introduction. This project implement searching technique in Artificial Intelligence with Genetic Algorithm. With this algorithm we made the population and the generation are free variable. Other things are we implement Elitism. In selection to get a parent, we using fitness competition to get a parent as much (Population - Elitism Population) so that the next generation will be formed by Elitism Population and a child from Crossover.

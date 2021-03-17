@@ -16,7 +16,9 @@ class kromosome():
         temp_sum = 0
         for i in range(3):
             temp_sum = temp_sum + self.kromosom[i+3]
-        self.y = (-1 + ((2-(-1)) * (temp_sum/3)))
+        # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
+        # *not responsible if someone plagirized or copied my code
+        self.y = (-1 + ((1-(-1)) * (temp_sum/3)))
 
     def CalculateFitness(self):
         self.fitness = (math.cos(self.x**2)*math.sin(self.y**2) + (self.x + self.y))
@@ -40,6 +42,8 @@ def initialize_population(population_made):
     population = []
     for i in range(population_made): #variable
         kromosome_temp = kromosome()
+        # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
+        # *not responsible if someone plagirized or copied my code
         population.append(kromosome_temp)
     return population
 
@@ -65,27 +69,29 @@ def PopulationFitnessSort(population: [kromosome()]):
     return population
 
 def tournamentSelection(population):
-    if (len(population)/2) % 2 != 0:
-        get_Selection = int( (len(population) +2) / 2 )
-    else:
-        get_Selection = int((len(population) / 2))
+    get_selection = (math.floor(len(population)/ 5))
+    if get_selection % 2 != 0:
+        get_selection += 1
+    jum_parent = (len(population) - get_selection)
+    start_parent = int((get_selection / 2) - 1)
     parent = []
-    for i in range(get_Selection):
-        parent.append(population[i])
+    for i in range(jum_parent) :
+        parent.append(population[start_parent])
 
     return parent
 
 def getElitism(population):
-    #Jumlah elitism = Jumlah populasi - getSelection
-    if (len(population)/2) % 2 != 0:
-        get_Selection = int((len(population) +2) / 2 )
-    else:
-        get_Selection = int((len(population) / 2))
+    get_selection = (math.floor(len(population)/ 5))
+    if get_selection % 2 != 0:
+        get_selection += 1
     elitism = []
-    for i in range(len(population)-get_Selection):
+    for i in range(get_selection):
         elitism.append(population[i])
 
     return elitism
+
+# Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
+# *not responsible if someone plagirized or copied my code
 
 def MatingPool(parent = [kromosome()]):
     #buat mating pool
@@ -152,16 +158,17 @@ def printAllKromosome(population = [kromosome()]):
 
 def printBestKromosom(best: kromosome, generasi):
     print(" Best Fitness from Generation {}".format(generasi+1))
+    # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
+    # *not responsible if someone plagirized or copied my code
     print("Fitness: {}".format(best.fitness))
     print("Fenotip X: {} Y: {}".format(best.x, best.y))
     print("Genotipe: {} \n".format(best.kromosom))
 
 
-
 if __name__ == "__main__":
-    population_number = int(input("How many population do you want to have? \n [Input Even Number] : "))
-    while population_number % 2 != 0 and population_number <= 0:
-        population_number = int(input("How many population do you want to have? \n [Input Even Number] : "))
+    population_number = int(input("How many population do you want to have? \n [Input Even Number over 10] : "))
+    while (population_number % 2 != 0) or (population_number < 10):
+        population_number = int(input("How many population do you want to have? \n [Input Even Number over 10] : "))
 
     generation = int(input("How many generation do you want to have?: "))
     while generation <= 0:
@@ -178,8 +185,9 @@ if __name__ == "__main__":
         if best_kromosom.fitness < population[0].fitness:
             best_kromosom = population[0]
             printBestKromosom(population[0], i)
-        parent = tournamentSelection(population)
+        
         elitism = getElitism(population)
+        parent = tournamentSelection(population) 
         couple = MatingPool(parent)
         children = crossover(couple)
         children = mutation(children)
