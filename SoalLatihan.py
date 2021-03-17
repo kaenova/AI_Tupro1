@@ -7,21 +7,16 @@ class kromosome():
     panjang = 6
     
     def decodeX(self):
-        temp_sum = 0
-        for i in range(3):
-            temp_sum = temp_sum + self.kromosom[i]
-        self.x = (-1 + ((2-(-1)) * (temp_sum/3)))
+        ## Buatlah decoder untuk menDecode X dengan batas [-1, 2] dengan inputan kromosom sepanjang 6
+        
 
     def decodeY(self):
-        temp_sum = 0
-        for i in range(3):
-            temp_sum = temp_sum + self.kromosom[i+3]
-        # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
-        # *not responsible if someone plagirized or copied my code
-        self.y = (-1 + ((1-(-1)) * (temp_sum/3)))
+        ## Buatlah decoder untuk menDecode Y dengan batas [-1, 1] dengan inputan kromosom sepanjang 6
+        
 
     def CalculateFitness(self):
-        self.fitness = (math.cos(self.x**2)*math.sin(self.y**2) + (self.x + self.y))
+        ## Buatlah nilai fitness menggunakan x dan y
+        
 
     def PrintKromosome(self):
         print("Fitness: {}".format(self.fitness))
@@ -33,19 +28,14 @@ class kromosome():
         self.fitness = 0
         self.x = 0
         self.y = 0
-        for j in range(6):
-            self.kromosom.append(round((random.uniform(0,1)), 3))
+        ## Buatlah kromosom sepanjang 6 dengan masing2 "blok" bernilai random dari [0,1]
+        
         self.decodeX()
         self.decodeY()
 
 def initialize_population(population_made):
-    population = []
-    for i in range(population_made): #variable
-        kromosome_temp = kromosome()
-        # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
-        # *not responsible if someone plagirized or copied my code
-        population.append(kromosome_temp)
-    return population
+    ##Buatlah sebuah list yang berisi tipe data kromosom sebanyak (population made)
+    
 
 def calculateKromosomeFitness(population):
     for i in range(len(population)):
@@ -174,21 +164,10 @@ if __name__ == "__main__":
     while generation <= 0:
         generation = int(input("How many generation do you want to have?: "))
     
-
+    ## Inisialisasikan populasi sebanyak variable (population_number) dengan memanfaatkan initialize_population
     population = initialize_population(population_number)
 
     best_kromosom = kromosome()
 
     for i in tqdm(range(generation)):
-        calculateKromosomeFitness(population)
-        PopulationFitnessSort(population)
-        if best_kromosom.fitness < population[0].fitness:
-            best_kromosom = population[0]
-            printBestKromosom(population[0], i)
-        
-        elitism = getElitism(population)
-        parent = tournamentSelection(population) 
-        couple = MatingPool(parent)
-        children = crossover(couple)
-        children = mutation(children)
-        population = children + elitism
+        ## Buatlah main dengan prosedur dan function-function diatas
