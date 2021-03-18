@@ -1,0 +1,3 @@
+What to do list:
+1.  I think it's still wrong to get the parents.
+2.  The sorting algorithm its not optimized.
