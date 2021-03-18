@@ -52,19 +52,7 @@ def calculateKromosomeFitness(population):
         population[i].CalculateFitness()
 
 def PopulationFitnessSort(population: [kromosome()]):
-    i = 0
-    while i < len(population) - 1:
-        j = i + 1
-        maximum = i
-        while j < len(population):
-            if population[j].fitness > population[maximum].fitness:
-                maximum = j
-            j = j+1
-        
-        temp = population[i]
-        population[i] = population[maximum]
-        population[maximum] = temp
-        i = i + 1
+    population = sorted(population, key=lambda x: x.fitness, reverse= 1)
 
     return population
 
@@ -182,6 +170,7 @@ if __name__ == "__main__":
     for i in tqdm(range(generation)):
         calculateKromosomeFitness(population)
         PopulationFitnessSort(population)
+        
         if best_kromosom.fitness < population[0].fitness:
             best_kromosom = population[0]
             printBestKromosom(population[0], i)
