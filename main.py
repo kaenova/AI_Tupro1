@@ -59,7 +59,7 @@ def PopulationFitnessSort(population: [kromosome()]):
 def tournamentSelection(population):
     get_selection = (math.floor(len(population)/ 5))
     if get_selection % 2 != 0:
-        get_selection += 1
+       get_selection += 1
     jum_parent = (len(population) - get_selection)
     start_parent = int((get_selection / 2) - 1)
     parent = []
@@ -181,3 +181,5 @@ if __name__ == "__main__":
         children = crossover(couple)
         children = mutation(children)
         population = children + elitism
+        
+        
