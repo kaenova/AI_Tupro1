@@ -186,5 +186,3 @@ if __name__ == "__main__":
         children = crossover(couple)
         children = mutation(children)
         population = children + elitism
-        
-        
