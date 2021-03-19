@@ -8,13 +8,13 @@ class kromosome():
     
     def decodeX(self):
         temp_sum = 0
-        for i in range(3):
+        for i in range(int(self.panjang / 2)):
             temp_sum = temp_sum + self.kromosom[i]
         self.x = (-1 + ((2-(-1)) * (temp_sum/3)))
 
     def decodeY(self):
         temp_sum = 0
-        for i in range(3):
+        for i in range(int(self.panjang / 2)):
             temp_sum = temp_sum + self.kromosom[i+3]
         # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
         # *not responsible if someone plagirized or copied my code
@@ -136,7 +136,8 @@ def mutation(children):
         for j in range(children[i].panjang):
             random_mutation = random.uniform(0,1)
             if (random_mutation < 0.1 ): #Setup mutasi
-                children[i].kromosom[j] += round((random.uniform(-0.08,0.08)),3)
+                children[i].kromosom[j] += random.uniform(-0.08,0.08)
+                children[i].kromosom[j] = round(children[i].kromosom[j], 3)
     
     return children
 
