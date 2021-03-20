@@ -4,7 +4,7 @@ from time import sleep
 from tqdm import tqdm
 
 class kromosome():
-    panjang = 8
+    panjang = 10
     
     def decodeX(self):
         temp_genotipe = 0
@@ -108,7 +108,7 @@ def crossover(pasangan = [[kromosome],[kromosome]]):
         temp_pasangan = pasangan[i]
         parent1 = temp_pasangan[0]
         parent2 = temp_pasangan[1]
-        panjang_potong = random.randint(1,4)
+        panjang_potong = random.randint(1,parent1.panjang - 2)
 
         children_temp1 = []
         children_temp2 = []
@@ -174,7 +174,7 @@ if __name__ == "__main__":
 
     for i in tqdm(range(generation)):
         calculateKromosomeFitness(population)
-        PopulationFitnessSort(population)
+        population = PopulationFitnessSort(population)
         
         if best_kromosom.fitness < population[0].fitness:
             best_kromosom = population[0]
