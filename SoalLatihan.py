@@ -4,19 +4,16 @@ from time import sleep
 from tqdm import tqdm
 
 class kromosome():
-    panjang = 6
+    panjang = 8
     
     def decodeX(self):
         ## Buatlah decoder untuk menDecode X dengan batas [-1, 2] dengan inputan kromosom sepanjang 6
         
-
     def decodeY(self):
         ## Buatlah decoder untuk menDecode Y dengan batas [-1, 1] dengan inputan kromosom sepanjang 6
-        
 
     def CalculateFitness(self):
         ## Buatlah nilai fitness menggunakan x dan y
-        
 
     def PrintKromosome(self):
         print("Fitness: {}".format(self.fitness))
@@ -28,40 +25,26 @@ class kromosome():
         self.fitness = 0
         self.x = 0
         self.y = 0
-        ## Buatlah kromosom sepanjang 6 dengan masing2 "blok" bernilai random dari [0,1]
-        
+        ## Buatlah kromosom sepanjang 6 dengan masing2 "blok" bernilai random dari [0,9]
         self.decodeX()
         self.decodeY()
 
 def initialize_population(population_made):
     ##Buatlah sebuah list yang berisi tipe data kromosom sebanyak (population made)
-    
 
 def calculateKromosomeFitness(population):
     for i in range(len(population)):
         population[i].CalculateFitness()
 
 def PopulationFitnessSort(population: [kromosome()]):
-    i = 0
-    while i < len(population) - 1:
-        j = i + 1
-        maximum = i
-        while j < len(population):
-            if population[j].fitness > population[maximum].fitness:
-                maximum = j
-            j = j+1
-        
-        temp = population[i]
-        population[i] = population[maximum]
-        population[maximum] = temp
-        i = i + 1
+    population = sorted(population, key=lambda x: x.fitness, reverse= 1)
 
     return population
 
 def tournamentSelection(population):
     get_selection = (math.floor(len(population)/ 5))
     if get_selection % 2 != 0:
-        get_selection += 1
+       get_selection += 1
     jum_parent = (len(population) - get_selection)
     start_parent = int((get_selection / 2) - 1)
     parent = []
@@ -106,30 +89,35 @@ def crossover(pasangan = [[kromosome],[kromosome]]):
     populasi_anak = []
     for i in range(len(pasangan)):
         temp_pasangan = pasangan[i]
-        parent1 = temp_pasangan[0]
-        parent2 = temp_pasangan[1]
-        panjang_potong = random.randint(1,4)
+        random_num = random.uniform(0, 1)
+        if random_num < 0.85:
+            parent1 = temp_pasangan[0]
+            parent2 = temp_pasangan[1]
+            panjang_potong = random.randint(1,parent1.panjang - 2)
 
-        children_temp1 = []
-        children_temp2 = []
+            children_temp1 = []
+            children_temp2 = []
 
-        for j in range(panjang_potong):
-            children_temp1.append(parent1.kromosom[j])
-        for k in range(len(parent1.kromosom) - panjang_potong):
-            children_temp1.append(parent2.kromosom[k+panjang_potong])
-        for j in range(panjang_potong):
-            children_temp2.append(parent2.kromosom[j])
-        for k in range(len(parent1.kromosom) - panjang_potong):
-            children_temp2.append(parent1.kromosom[k+panjang_potong])
+            for j in range(panjang_potong):
+                children_temp1.append(parent1.kromosom[j])
+            for k in range(len(parent1.kromosom) - panjang_potong):
+                children_temp1.append(parent2.kromosom[k+panjang_potong])
+            for j in range(panjang_potong):
+                children_temp2.append(parent2.kromosom[j])
+            for k in range(len(parent1.kromosom) - panjang_potong):
+                children_temp2.append(parent1.kromosom[k+panjang_potong])
 
-        kromosome_temp_1 = kromosome()
-        kromosome_temp_2 = kromosome()
-        kromosome_temp_1.kromosom = children_temp1
-        kromosome_temp_2.kromosom = children_temp2
-        kromosome_temp_1.CalculateFitness()
-        kromosome_temp_2.CalculateFitness()
-        populasi_anak.append(kromosome_temp_1)
-        populasi_anak.append(kromosome_temp_2)
+            kromosome_temp_1 = kromosome()
+            kromosome_temp_2 = kromosome()
+            kromosome_temp_1.kromosom = children_temp1
+            kromosome_temp_2.kromosom = children_temp2
+            kromosome_temp_1.CalculateFitness()
+            kromosome_temp_2.CalculateFitness()
+            populasi_anak.append(kromosome_temp_1)
+            populasi_anak.append(kromosome_temp_2)
+        else:
+            populasi_anak.append(temp_pasangan[0])
+            populasi_anak.append(temp_pasangan[1])
 
     return populasi_anak
 
@@ -138,7 +126,10 @@ def mutation(children):
         for j in range(children[i].panjang):
             random_mutation = random.uniform(0,1)
             if (random_mutation < 0.1 ): #Setup mutasi
-                children[i].kromosom[j] += round((random.uniform(-0.08,0.08)),3)
+                if children[i].kromosom[j] > 0:
+                    children[i].kromosom[j] -= 1
+                else:
+                    children[i].kromosom[j] += 1
     
     return children
 
@@ -164,10 +155,10 @@ if __name__ == "__main__":
     while generation <= 0:
         generation = int(input("How many generation do you want to have?: "))
     
-    ## Inisialisasikan populasi sebanyak variable (population_number) dengan memanfaatkan initialize_population
-    population = initialize_population(population_number)
+
+    ## Inisialisasikan variable populasi sebanyak variable (population_number) dengan memanfaatkan initialize_population
 
     best_kromosom = kromosome()
 
     for i in tqdm(range(generation)):
-        ## Buatlah main dengan prosedur dan function-function diatas
+       ## Buatlah main dengan prosedur dan function-function diatas
