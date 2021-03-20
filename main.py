@@ -4,7 +4,7 @@ from time import sleep
 from tqdm import tqdm
 
 class kromosome():
-    panjang = 10
+    panjang = 8
     
     def decodeX(self):
         temp_genotipe = 0
@@ -106,30 +106,35 @@ def crossover(pasangan = [[kromosome],[kromosome]]):
     populasi_anak = []
     for i in range(len(pasangan)):
         temp_pasangan = pasangan[i]
-        parent1 = temp_pasangan[0]
-        parent2 = temp_pasangan[1]
-        panjang_potong = random.randint(1,parent1.panjang - 2)
+        random_num = random.uniform(0, 1)
+        if random_num < 0.85:
+            parent1 = temp_pasangan[0]
+            parent2 = temp_pasangan[1]
+            panjang_potong = random.randint(1,parent1.panjang - 2)
 
-        children_temp1 = []
-        children_temp2 = []
+            children_temp1 = []
+            children_temp2 = []
 
-        for j in range(panjang_potong):
-            children_temp1.append(parent1.kromosom[j])
-        for k in range(len(parent1.kromosom) - panjang_potong):
-            children_temp1.append(parent2.kromosom[k+panjang_potong])
-        for j in range(panjang_potong):
-            children_temp2.append(parent2.kromosom[j])
-        for k in range(len(parent1.kromosom) - panjang_potong):
-            children_temp2.append(parent1.kromosom[k+panjang_potong])
+            for j in range(panjang_potong):
+                children_temp1.append(parent1.kromosom[j])
+            for k in range(len(parent1.kromosom) - panjang_potong):
+                children_temp1.append(parent2.kromosom[k+panjang_potong])
+            for j in range(panjang_potong):
+                children_temp2.append(parent2.kromosom[j])
+            for k in range(len(parent1.kromosom) - panjang_potong):
+                children_temp2.append(parent1.kromosom[k+panjang_potong])
 
-        kromosome_temp_1 = kromosome()
-        kromosome_temp_2 = kromosome()
-        kromosome_temp_1.kromosom = children_temp1
-        kromosome_temp_2.kromosom = children_temp2
-        kromosome_temp_1.CalculateFitness()
-        kromosome_temp_2.CalculateFitness()
-        populasi_anak.append(kromosome_temp_1)
-        populasi_anak.append(kromosome_temp_2)
+            kromosome_temp_1 = kromosome()
+            kromosome_temp_2 = kromosome()
+            kromosome_temp_1.kromosom = children_temp1
+            kromosome_temp_2.kromosom = children_temp2
+            kromosome_temp_1.CalculateFitness()
+            kromosome_temp_2.CalculateFitness()
+            populasi_anak.append(kromosome_temp_1)
+            populasi_anak.append(kromosome_temp_2)
+        else:
+            populasi_anak.append(temp_pasangan[0])
+            populasi_anak.append(temp_pasangan[1])
 
     return populasi_anak
 
