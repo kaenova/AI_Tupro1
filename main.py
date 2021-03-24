@@ -44,8 +44,6 @@ def initialize_population(population_made):
     population = []
     for i in range(population_made): #variable
         kromosome_temp = kromosome()
-        # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
-        # *not responsible if someone plagirized or copied my code
         population.append(kromosome_temp)
     return population
 
@@ -143,10 +141,16 @@ def mutation(children):
         for j in range(children[i].panjang):
             random_mutation = random.uniform(0,1)
             if (random_mutation < 0.1 ): #Setup mutasi
-                if children[i].kromosom[j] > 0:
+                if (children[i].kromosom[j] + 1 == 10):
                     children[i].kromosom[j] -= 1
-                else:
+                elif ((children[i].kromosom[j] - 1 == -1)):
                     children[i].kromosom[j] += 1
+                else:
+                    random_mutation = random.uniform(0,1)
+                    if (random_mutation > 0.5):
+                        children[i].kromosom[j] += 1
+                    else:
+                        children[i].kromosom[j] -= 1
     
     return children
 
@@ -172,22 +176,21 @@ if __name__ == "__main__":
     while generation <= 0:
         generation = int(input("How many generation do you want to have?: "))
     
-
-    population = initialize_population(population_number)
-
+    populasi = []
+    populasi = initialize_population(population_number)
     best_kromosom = kromosome()
 
     for i in tqdm(range(generation)):
-        calculateKromosomeFitness(population)
-        population = PopulationFitnessSort(population)
+        calculateKromosomeFitness(populasi)
+        populasi = PopulationFitnessSort(populasi)
         
-        if best_kromosom.fitness < population[0].fitness:
-            best_kromosom = population[0]
-            printBestKromosom(population[0], i)
+        if best_kromosom.fitness < populasi[0].fitness:
+            best_kromosom = populasi[0]
+            printBestKromosom(populasi[0], i)
         
-        elitism = getElitism(population)
-        parent = tournamentSelection(population) 
-        couple = MatingPool(parent)
-        children = crossover(couple)
-        children = mutation(children)
-        population = children + elitism
+        elitism = getElitism(populasi)
+        parent = tournamentSelection(populasi)
+        pasangan = MatingPool(parent)
+        populasi_anak = crossover(pasangan)
+        populasi_anak = mutation(populasi_anak)
+        populasi = elitism + populasi_anak
