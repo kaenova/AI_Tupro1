@@ -1,4 +1,0 @@
-What to do list:
-1.  I think it's still wrong to get the parents.
-2.  Resolving it need elitism or not
-3.  Resolving how many parent will be made (this is in Parent Selection Procedure)

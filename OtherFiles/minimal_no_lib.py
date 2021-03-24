@@ -1,6 +1,7 @@
 import random
 import math
 from time import sleep
+from tqdm import tqdm
 
 class kromosome():
     panjang = 8
@@ -63,7 +64,7 @@ def tournamentSelection(population):
     start_parent = int((get_selection / 2) - 1)
     parent = []
     for i in range(jum_parent) :
-        parent.append(population[start_parent])
+        parent.append(population[start_parent+i])
 
     return parent
 
@@ -80,9 +81,8 @@ def getElitism(population):
 # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
 # *not responsible if someone plagirized or copied my code
 
-def MatingPool(parent = [kromosome()]):
-    #buat mating pool
-    parent_temp = parent
+def MatingPool(parent):
+    parent_temp = parent.copy()
     pasangan = []
     j = 0
 
@@ -95,7 +95,6 @@ def MatingPool(parent = [kromosome()]):
         parent_temp.pop(random_angka_parent)
         parent_temp.pop(0)
         j = j + 1
-
     return pasangan
 
 
@@ -108,27 +107,12 @@ def crossover(pasangan = [[kromosome],[kromosome]]):
             parent1 = temp_pasangan[0]
             parent2 = temp_pasangan[1]
             panjang_potong = random.randint(1,parent1.panjang - 2)
-
-            children_temp1 = []
-            children_temp2 = []
-
-            for j in range(panjang_potong):
-                children_temp1.append(parent1.kromosom[j])
-            for k in range(len(parent1.kromosom) - panjang_potong):
-                children_temp1.append(parent2.kromosom[k+panjang_potong])
-            for j in range(panjang_potong):
-                children_temp2.append(parent2.kromosom[j])
-            for k in range(len(parent1.kromosom) - panjang_potong):
-                children_temp2.append(parent1.kromosom[k+panjang_potong])
-
             kromosome_temp_1 = kromosome()
             kromosome_temp_2 = kromosome()
-            kromosome_temp_1.kromosom = children_temp1
-            kromosome_temp_2.kromosom = children_temp2
-            kromosome_temp_1.CalculateFitness()
-            kromosome_temp_2.CalculateFitness()
+            kromosome_temp_1.kromosom = parent1.kromosom[:panjang_potong] + parent2.kromosom[panjang_potong:]
+            kromosome_temp_2.kromosom = parent2.kromosom[:panjang_potong] + parent1.kromosom[panjang_potong:]
             populasi_anak.append(kromosome_temp_1)
-            populasi_anak.append(kromosome_temp_2)
+            populasi_anak.append(kromosome_temp_2) 
         else:
             populasi_anak.append(temp_pasangan[0])
             populasi_anak.append(temp_pasangan[1])
@@ -193,3 +177,4 @@ if __name__ == "__main__":
         populasi_anak = crossover(pasangan)
         populasi_anak = mutation(populasi_anak)
         populasi = elitism + populasi_anak
+        print(len(populasi))
