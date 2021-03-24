@@ -12,6 +12,7 @@ class kromosome():
         for i in range(int(self.panjang / 2)):
             temp_genotipe += self.kromosom[i] * (10**(-(i+1)))
             temp_integer += 9*(10**(-(i+1)))
+            # Copyrighted by Kaenova Mahendra Auditama, Adhe Akram Azhari, Elita Aurora Az Zahra
         self.x = (-1) + (((2 - (-1))/temp_integer) * temp_genotipe)
         
     def decodeY(self):
@@ -42,6 +43,7 @@ class kromosome():
 
 def initialize_population(population_made):
     population = []
+    # Copyrighted by Kaenova Mahendra Auditama, Adhe Akram Azhari, Elita Aurora Az Zahra
     for i in range(population_made): #variable
         kromosome_temp = kromosome()
         population.append(kromosome_temp)
@@ -78,9 +80,6 @@ def getElitism(population):
 
     return elitism
 
-# Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
-# *not responsible if someone plagirized or copied my code
-
 def MatingPool(parent):
     parent_temp = parent.copy()
     pasangan = []
@@ -90,6 +89,7 @@ def MatingPool(parent):
         pasangan_temp = []
         random_angka_parent = random.randint(1, (len(parent_temp)-1))
         pasangan_temp.append(parent_temp[0])
+        # Copyrighted by Kaenova Mahendra Auditama, Adhe Akram Azhari, Elita Aurora Az Zahra
         pasangan_temp.append(parent_temp[random_angka_parent])
         pasangan.append(pasangan_temp)
         parent_temp.pop(random_angka_parent)
@@ -143,8 +143,7 @@ def printAllKromosome(population = [kromosome()]):
 
 def printBestKromosom(best: kromosome, generasi):
     print(" Best Fitness from Generation {}".format(generasi+1))
-    # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
-    # *not responsible if someone plagirized or copied my code
+    # Copyrighted by Kaenova Mahendra Auditama, Adhe Akram Azhari, Elita Aurora Az Zahra
     print("Fitness: {}".format(best.fitness))
     print("Fenotip X: {} Y: {}".format(best.x, best.y))
     print("Genotipe: {} \n".format(best.kromosom))

@@ -23,6 +23,7 @@ class kromosome():
         self.y = (-1) + (((1 - (-1))/temp_integer) * temp_genotipe)
 
     def CalculateFitness(self):
+        # Copyrighted by Kaenova Mahendra Auditama, Adhe Akram Azhari, Elita Aurora Az Zahra
         self.fitness = (math.cos(self.x**2)*math.sin(self.y**2) + (self.x + self.y))
 
     def PrintKromosome(self):
@@ -61,6 +62,7 @@ def tournamentSelection(population):
     if get_selection % 2 != 0:
        get_selection += 1
     jum_parent = (len(population) - get_selection)
+    # Copyrighted by Kaenova Mahendra Auditama, Adhe Akram Azhari, Elita Aurora Az Zahra
     start_parent = int((get_selection / 2) - 1)
     parent = []
     for i in range(jum_parent) :
@@ -77,9 +79,6 @@ def getElitism(population):
         elitism.append(population[i])
 
     return elitism
-
-# Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
-# *not responsible if someone plagirized or copied my code
 
 def MatingPool(parent):
     parent_temp = parent.copy()
@@ -143,8 +142,7 @@ def printAllKromosome(population = [kromosome()]):
 
 def printBestKromosom(best: kromosome, generasi):
     print(" Best Fitness from Generation {}".format(generasi+1))
-    # Coded by Kaenova Mahendra Auditama (kaenova@gmail.com)
-    # *not responsible if someone plagirized or copied my code
+    # Copyrighted by Kaenova Mahendra Auditama, Adhe Akram Azhari, Elita Aurora Az Zahra
     print("Fitness: {}".format(best.fitness))
     print("Fenotip X: {} Y: {}".format(best.x, best.y))
     print("Genotipe: {} \n".format(best.kromosom))
