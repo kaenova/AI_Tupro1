@@ -156,7 +156,7 @@ if __name__ == "__main__":
     populasi = initialize_population(population_number)
     best_kromosom = kromosome()
 
-    for i in tqdm(range(generation)):
+    for i in range(generation):
         calculateKromosomeFitness(populasi)
         populasi = PopulationFitnessSort(populasi)
         
